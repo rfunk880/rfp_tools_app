@@ -1,0 +1,62 @@
+[
+    {
+        "name": "users_view",
+        "label": "View Users",
+        "module": "Users"
+    },
+    {
+        "name": "users_create",
+        "label": "Add New Users",
+        "module": "Users"
+    },
+    {
+        "name": "users_edit",
+        "label": "Update Users",
+        "module": "Users"
+    },
+    {
+        "name": "users_delete",
+        "label": "Delete Users",
+        "module": "Users"
+    },
+    {
+        "name": "companies_view",
+        "label": "View Companies",
+        "module": "Companies"
+    },
+    {
+        "name": "companies_create",
+        "label": "Add New Companies",
+        "module": "Companies"
+    },
+    {
+        "name": "companies_edit",
+        "label": "Update Companies",
+        "module": "Companies"
+    },
+    {
+        "name": "companies_delete",
+        "label": "Delete Companies",
+        "module": "Companies"
+    },
+    {
+        "name": "contacts_view",
+        "label": "View Contacts",
+        "module": "Contacts"
+    },
+    {
+        "name": "contacts_create",
+        "label": "Add New Contacts",
+        "module": "Contacts"
+    },
+    {
+        "name": "contacts_edit",
+        "label": "Update Contacts",
+        "module": "Contacts"
+    },
+    {
+        "name": "contacts_delete",
+        "label": "Delete Contacts",
+        "module": "Contacts"
+    }
+]
