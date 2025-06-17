@@ -23,12 +23,12 @@ class RowEdit extends Component
         'project.site_visit' => 'nullable',
         'project.bid_due' => 'nullable',
         'project.subcontractor_bid_due' => 'nullable',
+        'project.awarded_date' => 'nullable',
         'project.bid_document' => 'nullable',
         'project.status' => 'nullable',
         'project.sales_person_id' => 'nullable',
         'project.final_estimate' => 'nullable',
         'project.po_status' => 'nullable',
-        'project.est_start_date' => 'nullable',
         'project.est_start_date' => 'nullable',
         'project.est_end_date' => 'nullable',
         'project.duration' => 'nullable',
@@ -67,7 +67,7 @@ class RowEdit extends Component
                 $this->project->{$dateCol} = toTimezoneDate($val, 'm-d-Y H:i', $this->timezone_offset ?? @$this->project->metadata['timezone']);
             }
         }
-        foreach (['est_start_date', 'est_end_date'] as $dateCol) {
+        foreach (['est_start_date', 'est_end_date', 'awarded_date'] as $dateCol) {
             if ($val = $this->project->{$dateCol}) {
                 $this->project->{$dateCol} = toAppDate($val);
             }
@@ -82,33 +82,20 @@ class RowEdit extends Component
                 $this->project->{$dateCol} = toMysqlDateTime($val, 'm-d-Y H:i', 'Y-m-d H:i:00', $this->timezone_offset);
             }
         }
-
-        // if(!$this->project->probability){
-        //     $this->project->probability = 40;
-        // }
     }
 
     public function updatedProject()
     {
-        foreach (['bid_due', 'site_visit', 'est_start_date', 'est_end_date', 'subcontractor_bid_due'] as $dateCol) {
+        foreach (['bid_due', 'site_visit', 'est_start_date', 'est_end_date', 'subcontractor_bid_due', 'awarded_date'] as $dateCol) {
             if (!$this->project->{$dateCol}) {
                 $this->project->{$dateCol} = null;
             }
         }
 
-        // foreach (['bid_due', 'site_visit', 'subcontractor_bid_due'] as $dateCol) {
-        //     if ($val = $this->project->{$dateCol}) {
-        //         $this->project->{$dateCol} = toMysqlDate($val, 'm-d-Y H:i', 'Y-m-d H:i:00');
-        //     }
-        // }
         $this->beforeSaving();
-        // $this->initProjectDates();
-
-        // dd($this->project->site_visit);
-        // dd(date("Y-m-d", strtotime($this->project->site_visit)));
 
         $this->project->final_estimate = stringToDecimal($this->project->final_estimate);
-        // $this->project->is_key_account = 
+
         $this->project->save();
         $this->initProjectDates();
         $this->alert('success', 'Project updated successfully');

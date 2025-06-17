@@ -32,6 +32,7 @@
                                             <th style="width:250px;">Internal Notes</th>
                                             <th style="width:250px;">Probability</th>
                                             <th style="width:250px;">PO Status</th>
+                                            <th style="width:250px;">Awarded Date</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">

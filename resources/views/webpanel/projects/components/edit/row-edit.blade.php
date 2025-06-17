@@ -35,7 +35,6 @@
   
     </td>
     
-    
     <td style="width:250px;">
         <x-input-toggle value="{{ $project->bid_document }}">
             <input id="bid_document"
@@ -45,34 +44,6 @@
                    wire:model.lazy="project.bid_document">
         </x-input-toggle>
     </td>
-    
-    <!-- 
-    <td style="width:250px;">
-        <x-input-toggle value="{{ @$project->salesPersons->first()->name }}">
-            <select id="salesPersons"
-                    class="select2 form-select"
-                    name="salesPersons"
-                    multiple
-                    wire:model.lazy="form.salesPersons">
-                <option value=""></option>
-                {!! OptionsView(\App\Models\User::exceptAdmin()->active()->get(), 'id', 'name') !!}
-            </select>
-        </x-input-toggle>
-    </td>
-    
-    <td style="width:250px;">
-        <x-input-toggle value="{{ @$project->estimators->first()->name }}">
-            <select id="estimators"
-                    class="form-select"
-                    name="estimators"
-                    multiple
-                    wire:model.lazy="form.estimators">
-                <option value=""></option>
-                {!! OptionsView(\App\Models\User::exceptAdmin()->active()->get(), 'id', 'name') !!}
-            </select>
-        </x-input-toggle>
-    </td>
-     -->
      
     <td style="width:250px;">
         <x-input-toggle value="{{ $project->est_start_date }}">
@@ -161,5 +132,17 @@
             </select>
         </x-input-toggle>
     </td>
+
+    <td style="width:250px;">
+        <x-input-toggle value="{{ $project->awarded_date }}">
+            <x-date id="awarded_date_{{ $project->id }}"
+                        type="text"
+                        class="form-control"
+                        name="awarded_date"
+                        wire:model.live="project.awarded_date" />
+        </x-input-toggle>
+    </td>
     
 </tr>
+
+

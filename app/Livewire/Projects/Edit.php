@@ -94,29 +94,10 @@ class Edit extends Component
 
     public function updatedProject($value)
     {
-        foreach (['bid_due', 'site_visit', 'est_start_date', 'est_end_date', 'awarded_date', 'subcontractor_bid_due'] as $dateCol) {
-            if (!$this->project->{$dateCol}) {
-                $this->project->{$dateCol} = null;
-            }
-        }
-
-        // foreach (['bid_due', 'site_visit', 'subcontractor_bid_due'] as $dateCol) {
-        //     if ($val = $this->project->{$dateCol}) {
-        //         $this->project->{$dateCol} = toMysqlDate($val, 'm-d-Y H:i', 'Y-m-d H:i:00');
-        //     }
-        // }
-        $this->beforeSaving();
-        // $this->initProjectDates();
-
-        // dd($this->project->site_visit);
-        // dd(date("Y-m-d", strtotime($this->project->site_visit)));
-
-        $this->project->final_estimate = stringToDecimal($this->project->final_estimate);
-        // $this->project->is_key_account = 
-        
-
-        $this->project->save();
-        $this->initProjectDates();
+        // *** FIX: This method is intentionally left empty. ***
+        // It was causing an automatic save that conflicted with the main "Save" button,
+        // which erased the awarded_date before it could be saved properly.
+        // All saving is now handled by the saveProject() method.
     }
 
     private function beforeSaving()
@@ -152,14 +133,19 @@ class Edit extends Component
 
     public function saveProject()
     {
-        // foreach (['bid_due', 'site_visit', 'subcontractor_bid_due'] as $dateCol) {
-        //     if ($val = $this->project->{$dateCol}) {
-        //         $this->project->{$dateCol} = toMysqlDate($val, 'm-d-Y H:i', 'Y-m-d H:i:00');
-        //     }
-        // }
+        // This loop ensures that if a date is cleared in the form, it is correctly set to null before saving.
+        foreach (['bid_due', 'site_visit', 'est_start_date', 'est_end_date', 'awarded_date', 'subcontractor_bid_due'] as $dateCol) {
+            if (empty($this->project->{$dateCol})) {
+                $this->project->{$dateCol} = null;
+            }
+        }
+
         $this->beforeSaving();
-        // dd($this->project->toArray());
+        
+        $this->project->final_estimate = stringToDecimal($this->project->final_estimate);
+
         $this->project->save();
+        
         try {
 
             $service = new GoogleCalendarService($this->project->fresh());
@@ -169,8 +155,8 @@ class Edit extends Component
             // dd($e);
             $this->alert('error', 'Project couldn\'t be updated to calendar ' . $e->getMessage());
         }
+        
         $this->initProjectDates();
-        // $this->updatedForm($this->form);
     }
 
     public function updatedFormEstimators($val, $key)
